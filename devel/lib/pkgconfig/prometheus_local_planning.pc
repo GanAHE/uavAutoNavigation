@@ -1,0 +1,8 @@
+prefix=/home/ganahe/uavAutoNavigation/devel
+
+Name: prometheus_local_planning
+Description: Description of prometheus_local_planning
+Version: 0.0.0
+Cflags: -I/home/ganahe/uavAutoNavigation/modules/planning/local_planner/include
+Libs: -L${prefix}/lib -lLocal_Planning
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/ganahe/uavAutoNavigation/install
+
+Name: prometheus_local_planning
+Description: Description of prometheus_local_planning
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lLocal_Planning
+Requires: 

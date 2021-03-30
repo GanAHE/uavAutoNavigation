@@ -1,0 +1,8 @@
+prefix=/home/ganahe/uavAutoNavigation/devel
+
+Name: prometheus_global_planning
+Description: Description of prometheus_global_planning
+Version: 0.0.0
+Cflags: -I/home/ganahe/uavAutoNavigation/modules/planning/global_planning/include
+Libs: -L${prefix}/lib -lGlobal_Planning
+Requires: 
