@@ -1,3 +1,9 @@
+/**
+ * 轨迹生成
+ * 将混合A*的输出轨迹点转化为Bspline的控制点，再调用optimize函数完成优化。
+ * 
+ **/
+
 #include "bspline_opt/bspline_optimizer.h"
 #include <nlopt.hpp>
 using namespace std;

@@ -1,2 +1,0 @@
-set(sdf_tools_MESSAGE_FILES "/home/ganahe/uavAutoNavigation/modules/planning/FastPlanner/plan_env/ThirdParty/sdf_tools/msg/SDF.msg;/home/ganahe/uavAutoNavigation/modules/planning/FastPlanner/plan_env/ThirdParty/sdf_tools/msg/CollisionMap.msg;/home/ganahe/uavAutoNavigation/modules/planning/FastPlanner/plan_env/ThirdParty/sdf_tools/msg/TaggedObjectCollisionMap.msg")
-set(sdf_tools_SERVICE_FILES "/home/ganahe/uavAutoNavigation/modules/planning/FastPlanner/plan_env/ThirdParty/sdf_tools/srv/ComputeSDF.srv")

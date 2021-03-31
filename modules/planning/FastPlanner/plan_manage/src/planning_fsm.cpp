@@ -1,3 +1,12 @@
+/**
+ * Home node
+ * 
+ * 1.管理规划节点，运行planner状态机
+ * 2.安全性检查
+ * 3.订阅目标，发布规划的轨迹
+ * 
+ **/
+
 
 #include <plan_manage/planning_fsm.h>
 #define DEBUG 0
@@ -11,15 +20,15 @@ void PlanningFSM::init(ros::NodeHandle& nh)
   // B样条 - 速度限制、加速度限制、ratio限制?
   nh.param("bspline/limit_vel", NonUniformBspline::limit_vel_, -1.0);
   nh.param("bspline/limit_acc", NonUniformBspline::limit_acc_, -1.0);
-  nh.param("bspline/limit_ratio", NonUniformBspline::limit_ratio_, -1.0);
+  nh.param("bspline/limit_ratio", NonUniformBspline::limit_ratio_, -1.0);  // 时间分配的安全约束
 
   /* ---------- fsm param ---------- */
   // 
-  nh.param("fsm/flight_type", flight_type_, -1);
-  nh.param("fsm/thresh_replan", thresh_replan_, -1.0);
-  nh.param("fsm/thresh_no_replan", thresh_no_replan_, -1.0);
-  nh.param("fsm/safety_distance", safety_distance, 0.01);
-  nh.param("fsm/wp_num", wp_num_, -1);
+  nh.param("fsm/flight_type", flight_type_, -1); //飞行模式，手动还是自动加载goal
+  nh.param("fsm/thresh_replan", thresh_replan_, -1.0); //  无人机单次规划起点距离限制
+  nh.param("fsm/thresh_no_replan", thresh_no_replan_, -1.0); //  重规划终点限制 
+  nh.param("fsm/safety_distance", safety_distance, 0.01);  //安全距离
+  nh.param("fsm/wp_num", wp_num_, -1); 
 
   // 怎么使用的
   for (int i = 0; i < wp_num_; i++)
@@ -35,7 +44,7 @@ void PlanningFSM::init(ros::NodeHandle& nh)
 
   /* ---------- init edt environment ---------- */
   // now we use global map
-  nh.param("sdf_map/SDF_MODE", sdf_mode, 0);
+  nh.param("sdf_map/SDF_MODE", sdf_mode, 0);  // sdf模式，如果为0,非增量式sdf；为1，fast_planner默认增量式sdf
   // ROS_INFO("sdf_mode: %s", sdf_mode==0? "local sdf" : "global sdf");
 
   if(sdf_mode==0){
@@ -95,20 +104,22 @@ void PlanningFSM::init(ros::NodeHandle& nh)
   // 安全检查，4Hz
   safety_timer_ = node_.createTimer(ros::Duration(0.25), &PlanningFSM::safetyCallback, this);
 
+  /* ------------ Subscriber ---------------- */
   // 订阅目标点
-  waypoint_sub_ = node_.subscribe("/prometheus/planning/goal", 1, &PlanningFSM::waypointCallback, this);
+  waypoint_sub_ = node_.subscribe("/uavAutoNavigation_GanAHE/planning/goal", 1, &PlanningFSM::waypointCallback, this);
 
   // 订阅开关
-  swith_sub = node_.subscribe<std_msgs::Bool>("/prometheus/switch/fast_planner", 10, &PlanningFSM::switchCallback, this);  
+  swith_sub = node_.subscribe<std_msgs::Bool>("/uavAutoNavigation_GanAHE/switch/fast_planner", 10, &PlanningFSM::switchCallback, this);  
 
+  /* ------------ Pulisher ---------------- */
   // 发布重规划
-  replan_pub_ = node_.advertise<std_msgs::Empty>("/prometheus/fast_planning/replan", 10);
+  replan_pub_ = node_.advertise<std_msgs::Empty>("/uavAutoNavigation_GanAHE/fast_planning/replan", 10);
   // 发布紧急停止指令
-  safety_pub_ = node_.advertise<std_msgs::Int8>("/prometheus/planning/stop_cmd", 10);
+  safety_pub_ = node_.advertise<std_msgs::Int8>("/uavAutoNavigation_GanAHE/planning/stop_cmd", 10); // 当前是否安全的状态指令
   // 发布B样条
-  bspline_pub_ = node_.advertise<prometheus_plan_manage::Bspline>("/prometheus/planning/bspline", 10);
+  bspline_pub_ = node_.advertise<prometheus_plan_manage::Bspline>("/uavAutoNavigation_GanAHE/planning/bspline", 10); //规划出来的bspline轨迹
   // 发布消息
-  message_pub = node_.advertise<prometheus_msgs::Message>("/prometheus/message/fast_planner", 10);
+  message_pub = node_.advertise<prometheus_msgs::Message>("/uavAutoNavigation_GanAHE/message/fast_planner", 10);
   // ROS_INFO("---planning_fsm: init finished!---");
   trigger_ = true;
 

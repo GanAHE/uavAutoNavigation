@@ -1,2 +1,0 @@
-FastPlanner/bspline:FastPlanner/bspline_opt:FastPlanner/path_searching:FastPlanner/plan_env:FastPlanner/plan_manage:FastPlanner/poly_traj:FastPlanner/traj_utils:Utils/cmake_utils:Utils/pose_utils:Utils/rviz_plugins:global_planning:hybrid_astar:local_planner:planning_simulator:swarm_planning
--DCATKIN_DEVEL_PREFIX=/home/ganahe/uavAutoNavigation/devel -DCMAKE_INSTALL_PREFIX=/home/ganahe/uavAutoNavigation/install -G Unix Makefiles

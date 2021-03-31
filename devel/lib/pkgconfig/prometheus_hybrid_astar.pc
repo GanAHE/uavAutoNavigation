@@ -1,8 +1,0 @@
-prefix=/home/ganahe/uavAutoNavigation/devel
-
-Name: prometheus_hybrid_astar
-Description: Description of prometheus_hybrid_astar
-Version: 0.0.0
-Cflags: -I/home/ganahe/uavAutoNavigation/modules/planning/hybrid_astar/include
-Libs: -L${prefix}/lib -lGlobal_Planning
-Requires: 

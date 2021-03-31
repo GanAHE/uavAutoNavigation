@@ -1,6 +1,11 @@
+
+/*
+ * sdf地图
+ * 
+ * 1. 订阅点云数据 2. 处理点云数据并膨胀地图 3. 得到sdf地图
+*/
+
 #include "plan_env/sdf_map.h"
-
-
 
 namespace dyn_planner {
     SDFMap::SDFMap(Eigen::Vector3d ori, double resolution, Eigen::Vector3d size) {
@@ -576,19 +581,19 @@ namespace dyn_planner {
         node_ = nh;
 
         /* ---------- param ---------- */
-        node_.param("sdf_map/origin_x", origin_(0), -20.0);
+        node_.param("sdf_map/origin_x", origin_(0), -20.0); //地图原点
         node_.param("sdf_map/origin_y", origin_(1), -20.0);
         node_.param("sdf_map/origin_z", origin_(2), 0.0);
 
-        node_.param("sdf_map/map_size_x", map_size_(0), 40.0);
+        node_.param("sdf_map/map_size_x", map_size_(0), 40.0); //地图大小边界
         node_.param("sdf_map/map_size_y", map_size_(1), 40.0);
         node_.param("sdf_map/map_size_z", map_size_(2), 5.0);
 
-        node_.param("sdf_map/resolution_sdf", resolution_sdf_, 0.2);
-        node_.param("sdf_map/ceil_height", ceil_height_, 2.0);
-        node_.param("sdf_map/update_rate", update_rate_, 10.0);
-        node_.param("sdf_map/update_range", update_range_, 5.0);
-        node_.param("sdf_map/inflate", inflate_, 0.2);
+        node_.param("sdf_map/resolution_sdf", resolution_sdf_, 0.2); //地图分辨率
+        node_.param("sdf_map/ceil_height", ceil_height_, 2.0); // 限高
+        node_.param("sdf_map/update_rate", update_rate_, 10.0); // 地图更新频率
+        node_.param("sdf_map/update_range", update_range_, 5.0); // 单次更新距离
+        node_.param("sdf_map/inflate", inflate_, 0.2); // 地图安全膨胀距离
         node_.param("sdf_map/radius_ignore", radius_ignore_, 0.2);
 
         cout << "origin_: " << origin_.transpose() << endl;

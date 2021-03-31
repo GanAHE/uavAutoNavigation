@@ -1,3 +1,12 @@
+/**
+ * 混合A算法
+ * 用于实现全局规划 ，主要调用函数为 "search()"，
+ * 在已知地图的前提下，给定起点和终点状态(位置和速度)实现混合A搜索；
+ * 如果搜索成功，返回一系列path_nodes_节点
+ * 
+ **/
+
+
 #include <path_searching/kinodynamic_astar.h>
 #include <sstream>
 

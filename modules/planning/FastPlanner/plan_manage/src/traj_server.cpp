@@ -1,5 +1,6 @@
 /***************************************************************************************************************************
 * traj_server.cpp
+* 把得到的bspline轨迹进行处理，得到cmd (prometheus_msgs::PositionReference) 指令，发送给飞控使用
 *
 * Author: Tao JIANG, Yuhua QI
 *
@@ -241,23 +242,23 @@ int main(int argc, char** argv)
   node.param("sim_mode", sim_mode, false); 
 
   // 订阅bspline, replan标志， odom信息（只用于显示）
-  ros::Subscriber bspline_sub = node.subscribe("/prometheus/planning/bspline", 10, bsplineCallback);
+  ros::Subscriber bspline_sub = node.subscribe("/uavAutoNavigation_GanAHE/planning/bspline", 10, bsplineCallback); //由规划器生成的样条轨迹  
 
-  ros::Subscriber replan_sub = node.subscribe("/prometheus/fast_planning/replan", 10, replanCallback);
-
-  ros::Subscriber odom_sub = node.subscribe("/prometheus/drone_odom", 50, odomCallbck);
+  ros::Subscriber replan_sub = node.subscribe("/uavAutoNavigation_GanAHE/fast_planning/replan", 10, replanCallback); //重规划标志
+ 
+  ros::Subscriber odom_sub = node.subscribe("/uavAutoNavigation_GanAHE/drone_odom", 50, odomCallbck); //里程计数据 
 
   // 发布当前机器人指令状态
   ros::Timer cmd_timer = node.createTimer(ros::Duration(0.01), cmdCallback);
   
-  state_pub = node.advertise<visualization_msgs::Marker>("/prometheus/planning/state", 10);
+  state_pub = node.advertise<visualization_msgs::Marker>("/uavAutoNavigation_GanAHE/planning/state", 10); //显示运动
   
-  pos_cmd_pub = node.advertise<prometheus_msgs::PositionReference>("/prometheus/fast_planner/position_cmd", 50);
+  pos_cmd_pub = node.advertise<prometheus_msgs::PositionReference>("/uavAutoNavigation_GanAHE/fast_planner/position_cmd", 50); //给无人机控制指令
   
   // 发布轨迹控制指令，无人机实际轨迹
   ros::Timer vis_timer = node.createTimer(ros::Duration(0.2), visCallback);
-  traj_pub = node.advertise<visualization_msgs::Marker>("/prometheus/planning/traj", 10);
-
+  traj_pub = node.advertise<visualization_msgs::Marker>("/uavAutoNavigation_GanAHE/planning/traj", 10); //显示轨迹
+ 
   ros::Duration(1.0).sleep();
 
   cout << "[Traj server]: ready." << endl;

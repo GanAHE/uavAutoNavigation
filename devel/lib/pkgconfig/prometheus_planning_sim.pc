@@ -1,8 +1,0 @@
-prefix=/home/ganahe/uavAutoNavigation/devel
-
-Name: prometheus_planning_sim
-Description: Description of prometheus_planning_sim
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

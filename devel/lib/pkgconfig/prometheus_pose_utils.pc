@@ -1,8 +1,0 @@
-prefix=/home/ganahe/uavAutoNavigation/devel
-
-Name: prometheus_pose_utils
-Description: Description of prometheus_pose_utils
-Version: 0.0.0
-Cflags: -I/home/ganahe/uavAutoNavigation/modules/planning/Utils/pose_utils/include
-Libs: -L${prefix}/lib -lpose_utils
-Requires: 

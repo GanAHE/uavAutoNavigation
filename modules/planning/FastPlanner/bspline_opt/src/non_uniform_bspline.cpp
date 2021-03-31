@@ -1,3 +1,9 @@
+/**
+ * 自动时间分配
+ * 用于对样条轨迹进行时间分配优化（reallocateTime），保证整个轨迹的动力学安全
+ * 
+ **/
+
 #include "bspline_opt/non_uniform_bspline.h"
 #include <ros/ros.h>
 

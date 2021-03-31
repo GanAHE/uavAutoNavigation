@@ -1,8 +1,0 @@
-prefix=/home/ganahe/uavAutoNavigation/devel
-
-Name: path_searching
-Description: Description of path_searching
-Version: 0.0.0
-Cflags: -I/home/ganahe/uavAutoNavigation/modules/planning/FastPlanner/path_searching/include
-Libs: -L${prefix}/lib -lpath_searching
-Requires: plan_env
